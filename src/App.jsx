@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import Picker from "./Picker";
+import withFetch from "./withFetch";
+import List from "./List";
+
+const PickerWithFetch = withFetch(Picker);
+const ListWithFetch = withFetch(List);
 
 const App = () => {
     const [make, setMake] = useState('');
@@ -8,8 +13,9 @@ const App = () => {
     return <React.Fragment>
         <header>Car picker</header>
         <form>
-            <Picker type="make" onPick={setMake} />
-            <Picker type="model" disabled={!make} params={{ 'make': make }} onPick={setModel} />
+            <PickerWithFetch type="make" onPick={setMake} />
+            <PickerWithFetch type="model" disabled={!make} params={{ 'make': make }} onPick={setModel} />
+            <ListWithFetch type="vehicle" disabled={!model} params={{ 'make': make, 'model': model }} />
         </form>
     </React.Fragment>;
 };
