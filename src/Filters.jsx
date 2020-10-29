@@ -17,7 +17,7 @@ export const BinaryFilter = ({ name, on, off, setFilter }) => {
 
 export const NumericFilter = ({ name, setFilter }) => {
     const setFilterValue = (field) => ({ target: { value }}) => {
-        setFilter((filter) => ({...filter, [field]: value}));
+        setFilter({ [field]: value });
     }
 
     return <React.Fragment>

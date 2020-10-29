@@ -1,58 +1,49 @@
 import React, { useState } from 'react';
-import { BinaryFilter, EnumFilter, NumericFilter } from "./Filters";
+import VehicleFilter from "./VehicleFilter";
+import VehicleList from "./VehicleList";
+
+const isInRange = (value, {min, max}) => (!min || value > min) && (!max || value < max);
+const isMatchingString = (value, pattern) => !pattern || pattern === value;
 
 const VehicleBrowser = ({ elements, disabled }) => {
     if (disabled) {
         return null;
     }
 
-    const [enginePowerUnitsFilter, setEnginePowerUnitsFilter] = useState("Horsepower");
-    const [enginePowerFilter, setEnginePowerFilter] = useState({});
-    const [fuelTypeFilter, setFuelTypeFilter] = useState("");
-    const [bodyTypeFilter, setBodyTypeFilter] = useState("");
-    const [engineCapacityFilter, setEngineCapacityFilter] = useState({});
+    const [filters, setFilters] = useState({})
 
-    const { fuelType, bodyType } = elements.reduce((values, current) => {
-        values.fuelType.add(current.fuelType);
-        values.bodyType.add(current.bodyType);
+    const { fuelTypeValues, bodyTypeValues } = elements.reduce((values, current) => {
+        values.fuelTypeValues.add(current.fuelType);
+        values.bodyTypeValues.add(current.bodyType);
 
         return values;
     }, {
-        fuelType: new Set(),
-        bodyType: new Set(),
+        fuelTypeValues: new Set(),
+        bodyTypeValues: new Set(),
     });
 
-    const enginePowerKey = enginePowerUnitsFilter === "Horsepower" ? "enginePowerPS" : "enginePowerKW";
+    const {
+        enginePowerUnits,
+        enginePower = {},
+        fuelType,
+        bodyType,
+        engineCapacity = {}
+    } = filters;
 
-    const filteredElements = elements.filter((element) => {
-        return !(enginePowerFilter.min && element[enginePowerKey] < enginePowerFilter.min ||
-            enginePowerFilter.max && element[enginePowerKey] < enginePowerFilter.max ||
-            fuelTypeFilter.length && !fuelTypeFilter.includes(element.fuelType) ||
-            bodyTypeFilter.length && !bodyTypeFilter.includes(element.bodyType) ||
-            engineCapacityFilter.min && element.engineCapacity < engineCapacityFilter.min ||
-            engineCapacityFilter.max && element.engineCapacity > engineCapacityFilter.max);
-    });
+    const enginePowerKey = enginePowerUnits === "Horsepower" ? "enginePowerPS" : "enginePowerKW";
 
-    return <React.Fragment>
-        <div>
-            <BinaryFilter name="Engine power units" off="Horsepower" on="Kilowatts" setFilter={setEnginePowerUnitsFilter}/>
-            <NumericFilter name="Engine power" setFilter={setEnginePowerFilter} />
-            <EnumFilter values={[...fuelType]} name="Fuel type" setFilter={setFuelTypeFilter} />
-            <EnumFilter values={[...bodyType]} name="Body type" setFilter={setBodyTypeFilter} />
-            <NumericFilter name="Engine capacity" setFilter={setEngineCapacityFilter} />
-        </div>
-        {
-            filteredElements.map((element, index) => (
-                <div key={index}>
-                    Engine power [{enginePowerUnitsFilter}]: {element[enginePowerKey]}
-                    Fuel type: {element.fuelType}
-                    Body type: {element.bodyType}
-                    Engine capacity: {element.engineCapacity}
-                    All elements: {filteredElements.length}
-                </div>
-            ))
-        }
-    </React.Fragment>;
+    const filteredVehicles = elements.filter((element) =>
+        isInRange(element[enginePowerKey], enginePower) &&
+            isMatchingString(element.fuelType, fuelType) &&
+            isMatchingString(element.bodyType, bodyType) &&
+            isInRange(element.engineCapacity, engineCapacity));
+
+    return <>
+        <VehicleFilter fuelType={[...fuelTypeValues]}
+                       bodyType={[...bodyTypeValues]}
+                       setFilters={setFilters} />
+        <VehicleList vehicles={filteredVehicles} />
+    </>;
 }
 
 export default VehicleBrowser;
