@@ -11,7 +11,7 @@ const Picker = ({ type, elements, disabled, onPick }) => {
         <label>{`Choose ${type}:`}</label>
         <input type="text" list={type} onChange={setElement} />
         <datalist id={type}>
-            {elements.map((element, index) => <option value={element} key={index} />)}
+            {elements && elements.map((element, index) => <option value={element} key={index} />)}
         </datalist>
     </div>;
 }
