@@ -26,7 +26,7 @@ const App = () => {
                                      disabled={!model}
                                      params={{ 'make': make, 'model': model }}
                                      error={error}
-                                     errorHandler={setError}/>
+                                     errorHandler={setError} />
         </form>
         <ErrorMessage error={error} />
     </React.Fragment>;

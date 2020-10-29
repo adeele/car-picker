@@ -6,7 +6,7 @@ const isInRange = (value, {min, max}) => (!min || value > min) && (!max || value
 const isMatchingString = (value, pattern) => !pattern || pattern === value;
 
 const VehicleBrowser = ({ elements, disabled }) => {
-    if (disabled) {
+    if (disabled || !elements) {
         return null;
     }
 

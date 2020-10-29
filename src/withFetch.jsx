@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const withFetch = (Component) => ({ type, disabled = false, params = '', error, errorHandler = () => {}, ...props }) => {
     const [elements, setElements] = useState(null);
@@ -14,7 +14,7 @@ const withFetch = (Component) => ({ type, disabled = false, params = '', error, 
                     return response.json()
                 } else {
                     setElements(JSON.parse(localStorage.getItem(type)));
-                    throw new Error("Something went wrong. Something may not work properly.");
+                    throw new Error("An error occurred. Application may not work properly.");
                 }
             })
             .then((response) => {
