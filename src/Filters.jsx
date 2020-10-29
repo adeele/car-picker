@@ -31,26 +31,20 @@ export const NumericFilter = ({ name, setFilter }) => {
 }
 
 export const EnumFilter = ({ values = [], name, setFilter }) => {
-    const setFilterValue = (value) => ({ target: { checked }}) => {
-        if (checked) {
-            setFilter((filters) => [...filters, value]);
-        } else {
-            setFilter((filters) => {
-                return filters.filter((element) => element !== value);
-            });
-        }
+    const setFilterValue = ({ target: { value }}) => {
+        setFilter(value);
     }
 
     return <React.Fragment>
         <label>{name}</label>
-        {
-            values.map((value, index) => (
-                <div key={index}>
-                    <label>{value}</label>
-                    <input type="checkbox" onChange={setFilterValue(value)} />
-                </div>
-            ))
-        }
+        <select onChange={setFilterValue}>
+            <option />
+            {
+                values.map((value, index) => (
+                    <option key={index}>{value}</option>
+                ))
+            }
+        </select>
     </React.Fragment>;
 }
 
