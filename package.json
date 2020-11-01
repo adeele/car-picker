@@ -7,7 +7,9 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
+    "babel-jest": "^26.6.1",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^5.0.0",
@@ -29,5 +31,10 @@
     "type": "git",
     "url": "git+https://github.com/adeele/car-picker.git"
   },
-  "author": "Adrianna Małkiewicz-Błotniak"
+  "author": "Adrianna Małkiewicz-Błotniak",
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  }
 }

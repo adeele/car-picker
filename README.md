@@ -35,3 +35,4 @@ handle it eventually.
 5. I would change some HTML elements (`datalist`, `select`) from browser native into custom ones, so they can display
 prettier.
 6. I would make API url configurable.
+7. I would add some unit/integration tests.
