@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const VehicleList = ({ vehicles }) => {
+const VehicleList = ({ vehicles, onSelect }) => {
+    const [selected, setSelected] = useState({});
+
     const getListElement = ({ make, model, enginePowerPS, enginePowerKW, fuelType, bodyType, engineCapacity }) => ({
         "Make": make,
         "Model": model,
@@ -11,13 +13,25 @@ const VehicleList = ({ vehicles }) => {
         "Engine capacity": engineCapacity
     });
 
+    const onVehicleClick = (element) => {
+        setSelected(element);
+        onSelect(element);
+    }
+
+    const isElementSelected = (element) => JSON.stringify(element) === JSON.stringify(selected);
+
     return vehicles.map((element, index) => (
-        <div key={index} className="list-element">
-            {Object.entries(getListElement(element)).map(([key, value]) =>
-                <div className="list-entry" key={key}>
-                    <div className="entry-key">{`${key}:`}</div>
-                    <div className="entry-value">{value}</div>
-                </div>)}
+        <div key={index}
+             className={`list-element ${isElementSelected(element) ? "selected" : ""}`}
+             onClick={() => onVehicleClick(element)}
+        >
+            {
+                Object.entries(getListElement(element)).map(([key, value]) =>
+                    <div className="list-entry" key={key}>
+                        <div className="entry-key">{`${key}:`}</div>
+                        <div className="entry-value">{value}</div>
+                    </div>)
+            }
         </div>
     ))
 }

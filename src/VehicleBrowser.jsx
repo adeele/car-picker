@@ -5,7 +5,7 @@ import VehicleList from "./VehicleList";
 const isInRange = (value, {min, max}) => (!min || value > min) && (!max || value < max);
 const isMatchingString = (value, pattern) => !pattern || pattern === value;
 
-const VehicleBrowser = ({ elements }) => {
+const VehicleBrowser = ({ elements, onVehicleSelect }) => {
     if (!elements) {
         return null;
     }
@@ -34,15 +34,15 @@ const VehicleBrowser = ({ elements }) => {
 
     const filteredVehicles = elements.filter((element) =>
         isInRange(element[enginePowerKey], enginePower) &&
-            isMatchingString(element.fuelType, fuelType) &&
-            isMatchingString(element.bodyType, bodyType) &&
-            isInRange(element.engineCapacity, engineCapacity));
+        isMatchingString(element.fuelType, fuelType) &&
+        isMatchingString(element.bodyType, bodyType) &&
+        isInRange(element.engineCapacity, engineCapacity));
 
     return <div className="browser">
         <VehicleFilter fuelType={[...fuelTypeValues]}
                        bodyType={[...bodyTypeValues]}
                        setFilters={setFilters} />
-        <VehicleList vehicles={filteredVehicles} />
+        <VehicleList vehicles={filteredVehicles} onSelect={onVehicleSelect} />
     </div>;
 }
 

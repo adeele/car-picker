@@ -71,7 +71,7 @@ input:focus, select:focus {
     padding: 16px;
 }
 
-.list-element:hover {
+.list-element:hover, .list-element.selected {
     background-color: #ffe24f;
 }
 
