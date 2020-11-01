@@ -5,8 +5,8 @@ import ErrorMessage from "./ErrorMessage";
 import { getMakes, getModels, getVehicles } from "./API";
 
 const App = () => {
-    const [error, setError] = useState(null);
-    const [{ makes, make, models, model, vehicles }, setState] = useState({});
+    const [{ makes, make, models, model, vehicles, error }, setState] = useState({});
+    const setError = (error) => setState({ error, makes });
 
     useEffect(() => {
         getMakes().then((makes) => setState({ makes })).catch(setError);
@@ -33,13 +33,17 @@ const App = () => {
     }
 
     return <>
-        <header>Car picker</header>
+        <header>Car Picker</header>
         <form>
-            <Picker type="make" onPick={onMakePick} elements={makes} />
-            <Picker type="model" onPick={onModelPick} elements={models} />
-            <VehicleBrowser type="vehicle" disabled={!model} elements={vehicles} />
+            <div className="section">
+                <Picker type="make" onPick={onMakePick} elements={makes} />
+                <Picker type="model" onPick={onModelPick} elements={models} />
+            </div>
+            <div className="section">
+                <VehicleBrowser type="vehicle" elements={vehicles} />
+            </div>
+            <ErrorMessage error={error} />
         </form>
-        <ErrorMessage error={error} />
     </>;
 };
 

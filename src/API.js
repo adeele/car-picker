@@ -1,11 +1,20 @@
+const API_URL = "http://localhost:8080/api";
+
 const doFetch = (type, params, retries = 3) => {
-    return fetch(`http://localhost:8080/api/${type}s?${new URLSearchParams(params)}`)
+    return fetch(`${API_URL}/${type}${params ? `?${new URLSearchParams(params)}` : ""}`)
         .then(response => {
             if (response.ok) {
                 return response.json()
-            } else {
-                throw new Error("An error occurred. Application may not work properly.");
             }
+
+            throw new Error("An error occurred. Try again later.");
+        })
+        .then(data => {
+            if (!data || !data.length) {
+                throw new Error("Sorry, the vehicle you are looking does not exist.");
+            }
+
+            return data;
         })
         .catch((error) => {
             if (retries) {
@@ -16,6 +25,6 @@ const doFetch = (type, params, retries = 3) => {
         });
 }
 
-export const getMakes = () => doFetch('make', {});
-export const getModels = (make) => doFetch( 'model', { make });
-export const getVehicles = (make, model) => doFetch('vehicle', { make, model });
+export const getMakes = () => doFetch('makes', {});
+export const getModels = (make) => doFetch( 'models', { make });
+export const getVehicles = (make, model) => doFetch('vehicles', { make, model });

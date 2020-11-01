@@ -1,4 +1,94 @@
+body {
+    margin: 0;
+    font-family: "Helvetica", sans-serif;
+}
+
+header {
+    background-color: #ffe24f;
+    color: #363145;
+    font-size: 36px;
+    text-align: center;
+    padding: 32px 24px;
+}
+
+input, select {
+    border: 0;
+    border-bottom: 2px solid #363145;
+    padding: 16px 8px;
+    outline: none;
+    background-color: inherit;
+}
+
+input:focus, select:focus {
+    border-bottom-color: #7e57c2;
+}
+
 .picker {
     display: flex;
     flex-direction: column;
+    padding: 24px 16px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.section {
+    padding: 16px 0;
+}
+
+.browser {
+    padding: 16px 8px;
+    background-color: #f7f7f9;
+    color: #363145;
+}
+
+.filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 8px auto;
+    max-width: 600px;
+}
+
+.filter select, .filter input {
+    padding: 8px 0;
+}
+
+.filter input {
+    width: 80px;
+}
+
+.filter-input {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.list-element {
+    max-width: 600px;
+    margin: 16px auto;
+    background-color: #fff;
+    padding: 16px;
+}
+
+.list-element:hover {
+    background-color: #ffe24f;
+}
+
+.list-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+}
+
+.entry-value {
+    font-weight: bold;
+}
+
+.error {
+    max-width: 600px;
+    margin: 16px auto;
+    padding: 32px 24px;
+    text-align: center;
+    color: #FC663D;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BinaryFilter, EnumFilter, NumericFilter } from "./Filters";
+import { EnumFilter, NumericFilter } from "./Filters";
 
 const VehicleFilter = ({ fuelType, bodyType, setFilters }) => {
     const setFilterValue = (key) => (value) => {
@@ -19,17 +19,17 @@ const VehicleFilter = ({ fuelType, bodyType, setFilters }) => {
         }))
     }
 
-    return <div>
-        <BinaryFilter
+    return <>
+        <EnumFilter
+            values={[ "Horsepower", "Kilowatts" ]}
             name="Engine power units"
-            off="Horsepower"
-            on="Kilowatts"
-            setFilter={setFilterValue('enginePowerUnits')} />
+            setFilter={setFilterValue('enginePowerUnits')}
+            defaultValue="Horsepower" />
         <NumericFilter name="Engine power" setFilter={setFilterObject('enginePower')} />
         <EnumFilter values={fuelType} name="Fuel type" setFilter={setFilterValue('fuelType')} />
         <EnumFilter values={bodyType} name="Body type" setFilter={setFilterValue('bodyType')} />
         <NumericFilter name="Engine capacity" setFilter={setFilterObject('engineCapacity')} />
-    </div>
+    </>
 }
 
 export default VehicleFilter;
