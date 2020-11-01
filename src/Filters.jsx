@@ -5,14 +5,14 @@ export const BinaryFilter = ({ name, on, off, setFilter }) => {
         setFilter(checked ? on : off);
     }
 
-    return <React.Fragment>
+    return <>
         <label>{name}</label>
         <div>
             <label>{on}</label>
             <input type="checkbox" onChange={setFilterValue} />
             <label>{off}</label>
         </div>
-    </React.Fragment>
+    </>
 }
 
 export const NumericFilter = ({ name, setFilter }) => {
@@ -20,14 +20,14 @@ export const NumericFilter = ({ name, setFilter }) => {
         setFilter({ [field]: value });
     }
 
-    return <React.Fragment>
+    return <>
         <label>{name}</label>
         <div>
             <input type="number" onChange={setFilterValue('min')} />
             <label>-</label>
             <input type="number" onChange={setFilterValue('max')} />
         </div>
-    </React.Fragment>
+    </>
 }
 
 export const EnumFilter = ({ values = [], name, setFilter }) => {
@@ -35,7 +35,7 @@ export const EnumFilter = ({ values = [], name, setFilter }) => {
         setFilter(value);
     }
 
-    return <React.Fragment>
+    return <>
         <label>{name}</label>
         <select onChange={setFilterValue}>
             <option />
@@ -45,6 +45,6 @@ export const EnumFilter = ({ values = [], name, setFilter }) => {
                 ))
             }
         </select>
-    </React.Fragment>;
+    </>;
 }
 

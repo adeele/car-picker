@@ -9,18 +9,16 @@ const App = () => {
     const [{ makes, make, models, model, vehicles }, setState] = useState({});
 
     useEffect(() => {
-        getMakes((makes) => setState({ makes }), setError);
+        getMakes().then((makes) => setState({ makes })).catch(setError);
     }, []);
 
     const onMakePick = (make) => {
         setState(({ makes }) => ({ makes, make }));
 
         if (make) {
-            getModels(
-                make,
-                (models) => setState((prevState) => ({ ...prevState, models })),
-                setError
-            );
+            getModels(make)
+                .then((models) => setState((prevState) => ({ ...prevState, models })))
+                .catch(setError);
         }
     }
 
@@ -28,12 +26,9 @@ const App = () => {
         setState(({ models, makes, make }) => ({ models, model, makes, make }));
 
         if (model) {
-            getVehicles(
-                make,
-                model,
-                (vehicles) => setState((prevState => ({ ...prevState, vehicles }))),
-                setError
-            );
+            getVehicles(make, model)
+                .then((vehicles) => setState((prevState) => ({ ...prevState, vehicles })))
+                .catch(setError);
         }
     }
 
